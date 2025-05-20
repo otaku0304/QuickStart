@@ -1,8 +1,8 @@
 # === CONFIG ===
-$backendPath = "D:\repositories\work\retailers\retailers-service" 
-$frontendPath = "D:\repositories\work\retailers\retailers-dashboard"
+$backendPath = "C:\Path\To\Your\SpringBootProject" 
+$frontendPath = "C:\Path\To\Your\AngularOrReactProject"
 $backendPort = 8080
-$javaPath = "D:\installationPath\java_21"
+$javaPath = "C:\Path\To\Your\Java"
 $springProfile = "dev" # Example: "dev", "prod", or "" for none
 
 # === FUNCTION TO WAIT FOR PORT WITHOUT PROGRESS LOADER ===
