@@ -1,3 +1,18 @@
+# QuickStart Brand Display
+
+Clear-Host
+$brandName = "QuickStart"
+
+Write-Host "======================================" -ForegroundColor Cyan
+Write-Host "         WELCOME TO $brandName         " -ForegroundColor Yellow
+Write-Host "======================================" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "Empowering your journey with speed and innovation!" -ForegroundColor Green
+Write-Host ""
+Write-Host "Visit us at: https://github.com/otaku0304/QuickStart" -ForegroundColor Magenta
+Write-Host ""
+Write-Host "--------------------------------------" -ForegroundColor DarkCyan
+
 # === CONFIG ===
 $backendPath = "C:\Path\To\Your\SpringBootProject" 
 $frontendPath = "C:\Path\To\Your\AngularOrReactProject"
