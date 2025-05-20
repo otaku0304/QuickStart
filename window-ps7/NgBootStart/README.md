@@ -24,6 +24,7 @@ This Windows edition provides a simple PowerShell-based startup experience optim
 
 - **Java** (set your `JAVA_HOME` path inside the script)
 - **Maven**
+- **Git**
 - **Node.js** and **npm**
 - **Angular CLI** or React setup
 - **Windows PowerShell 7+**
