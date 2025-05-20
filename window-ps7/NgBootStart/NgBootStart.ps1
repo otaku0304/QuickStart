@@ -3,6 +3,7 @@ $backendPath = "D:\repositories\work\retailers\retailers-service"
 $frontendPath = "D:\repositories\work\retailers\retailers-dashboard"
 $backendPort = 8080
 $javaPath = "D:\installationPath\java_21"
+$springProfile = "dev" # Example: "dev", "prod", or "" for none
 
 # === FUNCTION TO WAIT FOR PORT WITHOUT PROGRESS LOADER ===
 function Wait-ForPort {
@@ -33,24 +34,31 @@ $env:JAVA_HOME = $javaPath
 $env:Path = "$javaPath\bin;$env:Path"
 
 # === CHECKOUT BACKEND CODE ===
-Write-Host "`Preparing retailers-service"
+Write-Host "`Preparing Backend"
 Set-Location $backendPath
 git checkout development
 git pull origin development
 
+# === PREPARE MAVEN COMMAND ARGUMENTS ===
+if ([string]::IsNullOrEmpty($springProfile)) {
+    $mvnArgs = "spring-boot:run"
+} else {
+    $mvnArgs = "spring-boot:run --define spring-boot.run.arguments='--spring.profiles.active=$springProfile'"
+}
+
 # === START BACKEND IN NEW POWERSHELL 7 WINDOW ===
-Write-Host "`Launching retailers-service in a new PowerShell 7 window..."
-Start-Process pwsh -ArgumentList "-NoExit", "-Command", "cd '$backendPath'; mvn spring-boot:run --define spring-boot.run.arguments='--spring.profiles.active=dev'"
+Write-Host "`Launching Backend in a new PowerShell 7 window..."
+Start-Process pwsh -ArgumentList "-NoExit", "-Command", "cd '$backendPath'; mvn $mvnArgs"
 
 # === WAIT FOR BACKEND TO BE READY ===
-Write-Host "`Waiting for retailers service to start on port $backendPort..."
+Write-Host "`Waiting for Backend to start on port $backendPort..."
 if (Wait-ForPort -Port $backendPort -TimeoutSeconds 60) {
     Write-Host "`Backend is up and running!"
-    Write-Host "`Preparing retailers-dashboard"
+    Write-Host "`Preparing Frontend"
     Set-Location $frontendPath
     git checkout development
     git pull origin development
-    Write-Host "`Launching retailers-dashboard in a new tab..."
+    Write-Host "`Launching Frontend in a new tab..."
     wt -w 0 nt -d "$frontendPath" pwsh -NoExit -Command "npm install && npm start"
 } else {
     Write-Host "`Backend did not start on port $backendPort within 60 seconds."
