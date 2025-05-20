@@ -6,14 +6,6 @@ This Windows edition provides a simple PowerShell-based startup experience optim
 
 ---
 
-## 📁 Project Structure
-
-QuickStart/
-├── scripts/
-│ └── NgBootStart.ps1 # PowerShell script for launching Spring Boot + Angular/React
-└── README.md
-
-
 > Note: The backend and frontend projects are **not stored** inside this repository. You configure their **local paths** in the NgBootStart.ps1
 
 ---
