@@ -1,5 +1,5 @@
 # === CONFIG ===
-$backendPath = "D:\repositories\work\retailers\retailers-service"
+$backendPath = "D:\repositories\work\retailers\retailers-service" 
 $frontendPath = "D:\repositories\work\retailers\retailers-dashboard"
 $backendPort = 8080
 $javaPath = "D:\installationPath\java_21"
