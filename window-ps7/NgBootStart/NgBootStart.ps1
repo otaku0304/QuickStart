@@ -1,8 +1,24 @@
+# QuickStart Brand Display
+
+Clear-Host
+$brandName = "QuickStart"
+
+Write-Host "======================================" -ForegroundColor Cyan
+Write-Host "         WELCOME TO $brandName         " -ForegroundColor Yellow
+Write-Host "======================================" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "Empowering your journey with speed and innovation!" -ForegroundColor Green
+Write-Host ""
+Write-Host "Visit us at: https://github.com/otaku0304/QuickStart" -ForegroundColor Magenta
+Write-Host ""
+Write-Host "--------------------------------------" -ForegroundColor DarkCyan
+
 # === CONFIG ===
 $backendPath = "C:\Path\To\Your\SpringBootProject" 
 $frontendPath = "C:\Path\To\Your\AngularOrReactProject"
 $backendPort = 8080
 $javaPath = "C:\Path\To\Your\Java"
+$springProfile = "dev" # Example: "dev", "prod", or "" for none
 
 # === FUNCTION TO WAIT FOR PORT WITHOUT PROGRESS LOADER ===
 function Wait-ForPort {
@@ -38,9 +54,16 @@ Set-Location $backendPath
 git checkout development
 git pull origin development
 
+# === PREPARE MAVEN COMMAND ARGUMENTS ===
+if ([string]::IsNullOrEmpty($springProfile)) {
+    $mvnArgs = "spring-boot:run"
+} else {
+    $mvnArgs = "spring-boot:run --define spring-boot.run.arguments='--spring.profiles.active=$springProfile'"
+}
+
 # === START BACKEND IN NEW POWERSHELL 7 WINDOW ===
 Write-Host "`Launching Backend in a new PowerShell 7 window..."
-Start-Process pwsh -ArgumentList "-NoExit", "-Command", "cd '$backendPath'; mvn spring-boot:run --define spring-boot.run.arguments='--spring.profiles.active=dev'"
+Start-Process pwsh -ArgumentList "-NoExit", "-Command", "cd '$backendPath'; mvn $mvnArgs"
 
 # === WAIT FOR BACKEND TO BE READY ===
 Write-Host "`Waiting for Backend to start on port $backendPort..."
