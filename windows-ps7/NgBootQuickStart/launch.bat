@@ -1,2 +1,2 @@
 @echo off
-powershell -ExecutionPolicy Bypass -File ".\NgBootStart.ps1"`
+powershell -ExecutionPolicy Bypass -File ".\NgBootQuickStart.ps1"`
