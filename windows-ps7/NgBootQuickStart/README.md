@@ -6,7 +6,7 @@ This Windows edition provides a simple PowerShell-based startup experience optim
 
 ---
 
-> Note: The backend and frontend projects are **not stored** inside this repository. You configure their **local paths** in the ngBootNgBootQuickStart.ps1
+> **Note**: The backend and frontend projects are **not stored** inside this repository. You configure their **local paths** in the `NgBootQuickStart.ps1`
 
 ---
 
