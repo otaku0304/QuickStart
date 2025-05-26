@@ -47,12 +47,7 @@ Write-Host "`nLaunching Flask Backend..." -ForegroundColor Cyan
 Set-Location $flaskPath
 
 # Start Flask backend in a new PowerShell 7 window
-Start-Process pwsh -ArgumentList "-NoExit", "-Command", @"
-cd '$flaskPath'
-. .\.venv\Scripts\Activate.ps1
-\$env:FLASK_APP = 'app.py'
-flask run
-"@
+Start-Process pwsh -ArgumentList "-NoExit", "-Command", "cd '$flaskPath'; . .\.venv\Scripts\Activate.ps1; $env:FLASK_APP 'app.py'; flask run"
 
 # Wait for Flask to start
 Write-Host "`Waiting for Flask backend to start on port $backendPort..."
