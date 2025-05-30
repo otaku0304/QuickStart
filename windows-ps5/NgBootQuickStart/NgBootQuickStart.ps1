@@ -65,7 +65,7 @@ if ([string]::IsNullOrEmpty($springProfile)) {
 Write-Host "`Launching Backend in a new PowerShell 5 window..."
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$backendPath'; mvn spring-boot:run --define spring-boot.run.arguments='--spring.profiles.active=dev'"
 
-# === WAIT FOR BACKEND TO BE READY ===
+# === WAIT FOR BACKEND TO BE READY ====
 Write-Host "`Waiting for Backend to start on port $backendPort..."
 if (Wait-ForPort -Port $backendPort -TimeoutSeconds 60) {
     Write-Host "`Backend is up and running!"
