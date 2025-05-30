@@ -14,10 +14,10 @@ Write-Host ""
 Write-Host "--------------------------------------" -ForegroundColor DarkCyan
 
 # === CONFIG ===
-$backendPath = "C:\Path\To\Your\SpringBootProject" 
-$frontendPath = "C:\Path\To\Your\AngularOrReactProject"
+$backendPath = "D:\repositories\work\retailers\retailers-service" 
+$frontendPath = "D:\repositories\work\retailers\retailers-dashboard"
 $backendPort = 8080
-$javaPath = "C:\Path\To\Your\Java"
+$javaPath = "D:\installationPath\java_21"
 $springProfile = "dev" # Example: "dev", "prod", or "" for none
 
 # === FUNCTION TO WAIT FOR PORT WITHOUT PROGRESS LOADER ===
@@ -73,8 +73,21 @@ if (Wait-ForPort -Port $backendPort -TimeoutSeconds 60) {
     Set-Location $frontendPath
     git checkout development
     git pull origin development
-    Write-Host "`nLaunching Frontend in a new tab..."
-    wt -w 0 nt -d "$frontendPath" powershell -NoExit -Command "npm install; npm start"
+    Write-Host "`nLaunching Frontend npm install in a new tab..."
+    Start-Process wt -ArgumentList @(
+     '-w', '0', 'nt', '-d', $frontendPath,
+     'powershell', '-NoExit', '-Command', 'npm install'
+    )
+
+    # OPTIONAL: Wait here for npm install to finish before starting npm start.
+    # This can be complex; a simpler way is to run npm install manually first or create a script file.
+
+    Write-Host "`nLaunching Frontend npm start in a new tab..."
+    Start-Process wt -ArgumentList @(
+     '-w', '0', 'nt', '-d', $frontendPath,
+     'powershell', '-NoExit', '-Command', 'npm start'
+    )
+
 } else {
     Write-Host "`Backend did not start on port $backendPort within 60 seconds."
     Read-Host "Press ENTER to close"
