@@ -73,8 +73,8 @@ if (Wait-ForPort -Port $backendPort -TimeoutSeconds 60) {
     Set-Location $frontendPath
     git checkout development
     git pull origin development
-    Write-Host "`Launching Frontend in a new tab..."
-    wt -w 0 nt -d "$frontendPath" powershell -NoExit -Command "& `{ npm install; npm start `}"
+    Write-Host "`nLaunching Frontend in a new tab..."
+    wt -w 0 nt -d "$frontendPath" powershell -NoExit -Command "npm install; npm start"
 } else {
     Write-Host "`Backend did not start on port $backendPort within 60 seconds."
     Read-Host "Press ENTER to close"
