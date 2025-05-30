@@ -49,9 +49,11 @@ $env:JAVA_HOME = $javaPath
 $env:Path = "$javaPath\bin;$env:Path"
 
 # === CHECKOUT BACKEND CODE ===
-Write-Host "`Preparing Backend"
+Write-Host "`nPreparing Backend..." -ForegroundColor DarkGreen
 Set-Location $backendPath
+Write-Host "Checking out 'development' branch..." -ForegroundColor DarkGreen
 git checkout development
+Write-Host "Pulling latest changes from origin/development..." -ForegroundColor DarkGreen
 git pull origin development
 
 # === PREPARE MAVEN COMMAND ARGUMENTS ===
@@ -62,18 +64,18 @@ if ([string]::IsNullOrEmpty($springProfile)) {
 }
 
 # === START BACKEND IN NEW POWERSHELL 7 WINDOW ===
-Write-Host "`Launching Backend in a new PowerShell 7 window..."
+Write-Host "`Launching Backend in a new PowerShell 7 window..." -ForegroundColor Yellow
 Start-Process pwsh -ArgumentList "-NoExit", "-Command", "cd '$backendPath'; mvn $mvnArgs"
 
 # === WAIT FOR BACKEND TO BE READY ===
 Write-Host "`Waiting for Backend to start on port $backendPort..."
 if (Wait-ForPort -Port $backendPort -TimeoutSeconds 60) {
-    Write-Host "`Backend is up and running!"
-    Write-Host "`Preparing Frontend"
+    Write-Host "`Backend is up and running!"  -ForegroundColor Cyan
+    Write-Host "`Preparing Frontend"  -ForegroundColor Cyan
     Set-Location $frontendPath
     git checkout development
     git pull origin development
-    Write-Host "`Launching Frontend in a new tab..."
+    Write-Host "`Launching Frontend in a new tab..."  -ForegroundColor Cyan
     wt -w 0 nt -d "$frontendPath" pwsh -NoExit -Command "npm install && npm start"
 } else {
     Write-Host "`Backend did not start on port $backendPort within 60 seconds."

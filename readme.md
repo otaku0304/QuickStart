@@ -13,8 +13,7 @@
 ## 📁 Current Structure
 
 - `windows-ps7/NgBootStart`: Stable and functional. Tested with Angular apps and working as expected.
-- `windows-ps5/NgBootStart`: Under development. Compatibility with legacy systems being improved.
-- `windows-ps7/FlaskQuickStart`: Stable and functional. Tested with Flask app and working as expected.
+- `windows-ps5/NgBootStart`: Stable and functional. Tested with Angular apps and working as expected.
 
 ## ⚠️ Editor Launch Issues
 
