@@ -1,6 +1,6 @@
 # QuickStart
 
-**QuickStart** is a PowerShell-based automation setup for full-stack application development, designed to make initializing frontend and backend environments seamless, especially for Angular or Node.js-based projects on Windows.
+**QuickStart** is a PowerShell-based automation setup to streamline running applications like frontend, backend, or full-stack across multiple environments — including local, dev, stage, and production.
 
 ## 🚀 Features
 
