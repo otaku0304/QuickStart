@@ -31,5 +31,6 @@ These issues are actively being addressed and workarounds are being tested in th
    ```bash
    git clone https://github.com/otaku0304/QuickStart.git
 2. Navigate to the appropriate folder (e.g., windows-ps7/NgBootStart).
+3. Customize the setup by editing the Retailers.ps1 file according to your environment and project needs (e.g., choose whether to run frontend, backend, or full-stack; set environment type like local, dev, stage, or prod).
 
-3. Run the launch.bat by double clicking 
+4. Run the launch.bat by double clicking 
