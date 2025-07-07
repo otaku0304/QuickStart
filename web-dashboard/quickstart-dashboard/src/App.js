@@ -69,7 +69,7 @@ function App() {
   };
 
   return (
-    <div className={darkMode ? 'bg-dark text-light min-vh-100' : 'bg-light text-dark min-vh-100'}>
+    <div className={`min-vh-100 ${darkMode ? 'dark-mode' : 'light-mode'}`}>
       <div className="container py-4">
         {/* Header with logo and toggle */}
         <div className="d-flex justify-content-between align-items-center mb-4">
@@ -91,7 +91,7 @@ function App() {
 
           {/* Application Type */}
           <div className="mb-3">
-            <label className="form-label">Application Type</label>
+            <label className="form-label fw-bold">Application Type</label>
             <div className="d-flex gap-3 flex-wrap">
               {['frontend', 'backend', 'fullstack'].map(type => (
                 <div key={type} className="form-check">
@@ -114,10 +114,10 @@ function App() {
 
           {/* Project Type */}
           <div className="mb-3">
-            <label className="form-label">Project Type</label>
+            <label className="form-label fw-bold">Project Type</label>
             <div className="d-flex flex-wrap gap-3">
               {(isFullstack
-                ? ['React + Spring Boot', 'Angular + Spring Boot']
+                ? ['React/ Angular + Spring Boot']
                 : ['React', 'Angular', 'Node.js', 'Spring Boot']
               ).map(type => (
                 <div key={type} className="form-check">
@@ -140,7 +140,7 @@ function App() {
 
           {/* PowerShell Version */}
           <div className="mb-3">
-            <label className="form-label">PowerShell Version</label>
+            <label className="form-label fw-bold">PowerShell Version</label>
             <div className="d-flex gap-3">
               {['5', '7'].map(ver => (
                 <div key={ver} className="form-check">
@@ -163,13 +163,13 @@ function App() {
 
           {/* Paths */}
           {isFrontend && (
-            <div className="mb-3">
+            <div className="mb-3 fw-bold">
               <label>Frontend Path</label>
               <input className="form-control" name="frontendPath" value={form.frontendPath} onChange={handleChange} />
             </div>
           )}
           {isBackend && (
-            <div className="mb-3">
+            <div className="mb-3 fw-bold">
               <label>Backend Path</label>
               <input className="form-control" name="backendPath" value={form.backendPath} onChange={handleChange} />
             </div>
@@ -178,17 +178,17 @@ function App() {
             <>
               <div className="mb-3">
                 <label>Java Path</label>
-                <input className="form-control" name="javaPath" value={form.javaPath} onChange={handleChange} />
+                <input className="form-control" name="javaPath" value={form.javaPath} onChange={handleChange} placeholder="optional will use the ja version in system path"/>
               </div>
               <div className="mb-3">
                 <label>Spring Profile</label>
-                <input className="form-control" name="springProfile" value={form.springProfile} onChange={handleChange} />
+                <input className="form-control" name="springProfile" value={form.springProfile} onChange={handleChange} placeholder="local, dev, prod"/>
               </div>
             </>
           )}
 
           {/* Port */}
-          <div className="mb-3">
+          <div className="mb-3 fw-bold">
             <label>Port (optional)</label>
             <input
               className="form-control"
