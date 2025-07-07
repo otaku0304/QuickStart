@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import "./App.css";
 import logo from "./assets/rocket.png";
@@ -30,7 +30,6 @@ function App() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setForm((prev) => {
       const updatedForm = { ...prev, [name]: value };
       if (name === "applicationType") {
@@ -72,21 +71,29 @@ function App() {
   };
 
   const handleSubmit = async () => {
-    if (
-      isFullstack &&
-      (!form.projectType || !form.frontendPath || !form.backendPath)
-    ) {
-      alert("Please provide both frontend and backend project paths.");
-      return;
+    if (isFullstack) {
+      if (!form.frontendPath || !form.backendPath) {
+        alert(
+          "Please provide both React/Angular and Spring Boot project paths."
+        );
+        return;
+      }
     }
+
     if (form.applicationType === "frontend" && !form.frontendPath) {
-      alert("Please provide the frontend project path.");
+      alert(
+        `Please provide the ${form.projectType || "frontend"} project path.`
+      );
       return;
     }
+
     if (form.applicationType === "backend" && !form.backendPath) {
-      alert("Please provide the backend project path.");
+      alert(
+        `Please provide the ${form.projectType || "backend"} project path.`
+      );
       return;
     }
+
     if (isSpringBoot && (!form.javaPath || !form.springProfile)) {
       alert("Please provide the Java path and Spring profile.");
       return;
@@ -94,7 +101,7 @@ function App() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/generate-launch-zip",
+        "http://localhost:5000/generate",
         form,
         { responseType: "blob" }
       );
@@ -124,154 +131,157 @@ function App() {
               alt="Logo"
               style={{ height: "32px", marginRight: "8px" }}
             />
-            <span className="text-primary">QuickStart Launch Script Generator</span>
+            <span className="text-primary">
+              QuickStart Launch Script Generator
+            </span>
           </div>
-          <div>
-            <button
-              className={`btn btn-sm ${darkMode ? "btn-light" : "btn-dark"}`}
-              onClick={toggleTheme}
-            >
-              {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
-            </button>
-          </div>
+          <button
+            className={`btn btn-sm ${darkMode ? "btn-light" : "btn-dark"}`}
+            onClick={toggleTheme}
+          >
+            {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
+          </button>
         </div>
 
         <div className="card shadow-lg p-4">
-          {/* Application Type */}
-          <div className="mb-3">
-            <label className="form-label fw-bold">Application Type</label>
-            <div className="d-flex gap-3 flex-wrap">
-              {["frontend", "backend", "fullstack"].map((type) => (
-                <div key={type} className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="applicationType"
-                    id={type}
-                    value={type}
-                    checked={form.applicationType === type}
-                    onChange={handleChange}
-                  />
-                  <label className="form-check-label" htmlFor={type}>
-                    {type.charAt(0).toUpperCase() + type.slice(1)}
-                  </label>
-                </div>
-              ))}
+          {/* Application Type + PowerShell */}
+          <div className="row mb-4">
+            <div className="col-md-6">
+              <label className="form-label fw-bold">Application Type</label>
+              <div className="d-flex gap-3 flex-wrap">
+                {["frontend", "backend", "fullstack"].map((type) => (
+                  <div key={type} className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="applicationType"
+                      id={type}
+                      value={type}
+                      checked={form.applicationType === type}
+                      onChange={handleChange}
+                    />
+                    <label className="form-check-label" htmlFor={type}>
+                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="col-md-6">
+              <label className="form-label fw-bold">PowerShell Version</label>
+              <div className="d-flex gap-3">
+                {["5", "7"].map((ver) => (
+                  <div key={ver} className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="powershellVersion"
+                      id={`ps${ver}`}
+                      value={ver}
+                      checked={form.powershellVersion === ver}
+                      onChange={handleChange}
+                    />
+                    <label className="form-check-label" htmlFor={`ps${ver}`}>
+                      PowerShell {ver}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Project Type */}
-          <div className="mb-3">
-            <label className="form-label fw-bold">Project Type</label>
-            <div className="d-flex flex-wrap gap-3">
-              {getProjectTypeOptions().map((type) => (
-                <div key={type} className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="projectType"
-                    id={type}
-                    value={type}
-                    checked={form.projectType === type}
-                    onChange={handleChange}
-                    disabled={isFullstack}
-                  />
-                  <label className="form-check-label" htmlFor={type}>
-                    {type}
-                  </label>
-                </div>
-              ))}
+          {/* Project Type + Port */}
+          <div className="row mb-4">
+            <div className="col-md-6">
+              <label className="form-label fw-bold">Project Type</label>
+              <div className="d-flex flex-wrap gap-3">
+                {getProjectTypeOptions().map((type) => (
+                  <div key={type} className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="projectType"
+                      id={type}
+                      value={type}
+                      checked={form.projectType === type}
+                      onChange={handleChange}
+                      disabled={isFullstack}
+                    />
+                    <label className="form-check-label" htmlFor={type}>
+                      {type}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-
-          {/* PowerShell Version */}
-          <div className="mb-3">
-            <label className="form-label fw-bold">PowerShell Version</label>
-            <div className="d-flex gap-3">
-              {["5", "7"].map((ver) => (
-                <div key={ver} className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="powershellVersion"
-                    id={`ps${ver}`}
-                    value={ver}
-                    checked={form.powershellVersion === ver}
-                    onChange={handleChange}
-                  />
-                  <label className="form-check-label" htmlFor={`ps${ver}`}>
-                    PowerShell {ver}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Paths */}
-          {isFrontend && (
-            <div className="mb-3 fw-bold">
-              <label>{getFrontendPathLabel()}</label>
+            <div className="col-md-6">
+              <label className="fw-bold">Port (optional)</label>
               <input
                 className="form-control"
-                name="frontendPath"
-                value={form.frontendPath}
+                name="port"
+                value={form.port}
                 onChange={handleChange}
-                placeholder="e.g., C:\\path\\to\\your\\project"
+                placeholder="e.g., 8080 or 3000 (default will be used if empty)"
               />
             </div>
-          )}
-          {isBackend && (
-            <div className="mb-3 fw-bold">
-              <label>{getBackendPathLabel()}</label>
-              <input
-                className="form-control"
-                name="backendPath"
-                value={form.backendPath}
-                onChange={handleChange}
-                placeholder="e.g., C:\\path\\to\\your\\project"
-              />
-            </div>
-          )}
+          </div>
 
-          {/* Spring Boot Fields */}
+          {/* Frontend + Backend Paths */}
+          <div className="row mb-4">
+            {isFrontend && (
+              <div className="col-md-6 mb-3">
+                <label className="fw-bold">{getFrontendPathLabel()}</label>
+                <input
+                  className="form-control"
+                  name="frontendPath"
+                  value={form.frontendPath}
+                  onChange={handleChange}
+                  placeholder="e.g., C:\\path\\to\\frontend"
+                />
+              </div>
+            )}
+            {isBackend && (
+              <div className="col-md-6 mb-3">
+                <label className="fw-bold">{getBackendPathLabel()}</label>
+                <input
+                  className="form-control"
+                  name="backendPath"
+                  value={form.backendPath}
+                  onChange={handleChange}
+                  placeholder="e.g., C:\\path\\to\\backend"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Spring Boot Extras */}
           {isSpringBoot && (
-            <>
-              <div className="mb-3">
+            <div className="row mb-4">
+              <div className="col-md-6 mb-3">
                 <label className="fw-bold">Java Path (optional)</label>
                 <input
                   className="form-control"
                   name="javaPath"
                   value={form.javaPath}
                   onChange={handleChange}
-                  placeholder="e.g., C:\\Program Files\\Java\\jdk-11.0.10 (If not provided, system default Java path will be used)"
+                  placeholder="Will use system default if not provided"
                 />
               </div>
-              <div className="mb-3">
+              <div className="col-md-6 mb-3">
                 <label className="fw-bold">Spring Profile (optional)</label>
                 <input
                   className="form-control"
                   name="springProfile"
                   value={form.springProfile}
                   onChange={handleChange}
-                  placeholder="e.g., local, dev, prod (If not provided, default profile will be used)"
+                  placeholder="e.g., local, dev, prod (default will be used if empty)"
                 />
               </div>
-            </>
+            </div>
           )}
 
-          {/* Port */}
-          <div className="mb-3 fw-bold">
-            <label>Port (optional)</label>
-            <input
-              className="form-control"
-              name="port"
-              value={form.port}
-              onChange={handleChange}
-              placeholder="e.g., 8080 or 3000 (If not provided, default port will be used)"
-            />
-          </div>
-
-          {/* Submit */}
+          {/* Submit Button */}
           <div className="text-center mt-4">
             <button className="btn btn-primary px-5" onClick={handleSubmit}>
               Generate & Download
