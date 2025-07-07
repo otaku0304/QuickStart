@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './App.css'; // For optional theme styles
+import React, { useState } from "react";
+import axios from "axios";
+import "./App.css";
+import logo from "./assets/rocket.png";
 
 function App() {
   const [form, setForm] = useState({
-    applicationType: 'frontend',
-    projectType: '',
-    powershellVersion: '7',
-    frontendPath: '',
-    backendPath: '',
-    javaPath: '',
-    springProfile: '',
-    port: ''
+    applicationType: "frontend",
+    projectType: "React",
+    powershellVersion: "7",
+    frontendPath: "",
+    backendPath: "",
+    javaPath: "",
+    springProfile: "",
+    port: "",
   });
 
   const [darkMode, setDarkMode] = useState(false);
@@ -20,80 +21,127 @@ function App() {
     setDarkMode((prev) => !prev);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+  const getProjectTypeOptions = (appType = form.applicationType) => {
+    if (appType === "frontend") return ["React", "Angular"];
+    if (appType === "backend") return ["Spring Boot", "Flask", "Node.js"];
+    if (appType === "fullstack") return ["React or Angular + Spring Boot"];
+    return [];
   };
 
-  const isFullstack = form.applicationType === 'fullstack';
-  const isFrontend = form.applicationType === 'frontend' || isFullstack;
-  const isBackend = form.applicationType === 'backend' || isFullstack;
-  const isSpringBoot =
-    form.projectType.includes('Spring Boot');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setForm((prev) => {
+      const updatedForm = { ...prev, [name]: value };
+      if (name === "applicationType") {
+        const options = getProjectTypeOptions(value);
+        updatedForm.projectType = options[0] || "";
+      }
+      return updatedForm;
+    });
+  };
+
+  const isFullstack = form.applicationType === "fullstack";
+  const isFrontend = form.applicationType === "frontend" || isFullstack;
+  const isBackend = form.applicationType === "backend" || isFullstack;
+  const isSpringBoot = form.projectType.includes("Spring Boot");
+
+  const getFrontendPathLabel = () => {
+    if (form.applicationType === "frontend") {
+      return form.projectType === "React"
+        ? "React Project Path"
+        : form.projectType === "Angular"
+        ? "Angular Project Path"
+        : "Frontend Project Path";
+    } else if (isFullstack) {
+      return "React/Angular JS Project Path";
+    }
+    return "Frontend Project Path";
+  };
+
+  const getBackendPathLabel = () => {
+    if (form.applicationType === "backend") {
+      if (form.projectType === "Spring Boot") return "Spring Boot Project Path";
+      if (form.projectType === "Flask") return "Flask Project Path";
+      if (form.projectType === "Node.js") return "Node.js Project Path";
+      return "Backend Project Path";
+    } else if (isFullstack) {
+      return "Spring Boot Project Path";
+    }
+    return "Backend Project Path";
+  };
 
   const handleSubmit = async () => {
-    if (isFullstack && (!form.projectType || !form.frontendPath || !form.backendPath)) {
-      alert('Fullstack setup requires project type and both paths.');
+    if (
+      isFullstack &&
+      (!form.projectType || !form.frontendPath || !form.backendPath)
+    ) {
+      alert("Please provide both frontend and backend project paths.");
       return;
     }
-    if (form.applicationType === 'frontend' && !form.frontendPath) {
-      alert('Frontend path is required.');
+    if (form.applicationType === "frontend" && !form.frontendPath) {
+      alert("Please provide the frontend project path.");
       return;
     }
-    if (form.applicationType === 'backend' && !form.backendPath) {
-      alert('Backend path is required.');
+    if (form.applicationType === "backend" && !form.backendPath) {
+      alert("Please provide the backend project path.");
       return;
     }
     if (isSpringBoot && (!form.javaPath || !form.springProfile)) {
-      alert('Java path and Spring profile are required.');
+      alert("Please provide the Java path and Spring profile.");
       return;
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/generate-launch-zip', form, {
-        responseType: 'blob'
-      });
+      const res = await axios.post(
+        "http://localhost:5000/generate-launch-zip",
+        form,
+        { responseType: "blob" }
+      );
 
-      const blob = new Blob([res.data], { type: 'application/zip' });
+      const blob = new Blob([res.data], { type: "application/zip" });
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', 'launch-folder.zip');
+      link.setAttribute("download", "launch-folder.zip");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     } catch (err) {
-      alert('Error generating file');
+      alert("Something went wrong while generating the ZIP.");
       console.error(err);
     }
   };
 
   return (
-    <div className={`min-vh-100 ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+    <div className={`min-vh-100 ${darkMode ? "dark-mode" : "light-mode"}`}>
       <div className="container py-4">
-        {/* Header with logo and toggle */}
+        {/* Header */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div className="fs-3 fw-bold">
-            {/* Logo image can go here */}
-            🚀 <span className="text-primary">QuickStart Launch Script Generator</span>
+            <img
+              src={logo}
+              alt="Logo"
+              style={{ height: "32px", marginRight: "8px" }}
+            />
+            <span className="text-primary">QuickStart Launch Script Generator</span>
           </div>
           <div>
             <button
-              className={`btn btn-sm ${darkMode ? 'btn-light' : 'btn-dark'}`}
+              className={`btn btn-sm ${darkMode ? "btn-light" : "btn-dark"}`}
               onClick={toggleTheme}
             >
-              {darkMode ? '☀ Light Mode' : '🌙 Dark Mode'}
+              {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
             </button>
           </div>
         </div>
 
         <div className="card shadow-lg p-4">
-
           {/* Application Type */}
           <div className="mb-3">
             <label className="form-label fw-bold">Application Type</label>
             <div className="d-flex gap-3 flex-wrap">
-              {['frontend', 'backend', 'fullstack'].map(type => (
+              {["frontend", "backend", "fullstack"].map((type) => (
                 <div key={type} className="form-check">
                   <input
                     className="form-check-input"
@@ -116,10 +164,7 @@ function App() {
           <div className="mb-3">
             <label className="form-label fw-bold">Project Type</label>
             <div className="d-flex flex-wrap gap-3">
-              {(isFullstack
-                ? ['React/ Angular + Spring Boot']
-                : ['React', 'Angular', 'Node.js', 'Spring Boot']
-              ).map(type => (
+              {getProjectTypeOptions().map((type) => (
                 <div key={type} className="form-check">
                   <input
                     className="form-check-input"
@@ -129,6 +174,7 @@ function App() {
                     value={type}
                     checked={form.projectType === type}
                     onChange={handleChange}
+                    disabled={isFullstack}
                   />
                   <label className="form-check-label" htmlFor={type}>
                     {type}
@@ -142,7 +188,7 @@ function App() {
           <div className="mb-3">
             <label className="form-label fw-bold">PowerShell Version</label>
             <div className="d-flex gap-3">
-              {['5', '7'].map(ver => (
+              {["5", "7"].map((ver) => (
                 <div key={ver} className="form-check">
                   <input
                     className="form-check-input"
@@ -164,25 +210,51 @@ function App() {
           {/* Paths */}
           {isFrontend && (
             <div className="mb-3 fw-bold">
-              <label>Frontend Path</label>
-              <input className="form-control" name="frontendPath" value={form.frontendPath} onChange={handleChange} />
+              <label>{getFrontendPathLabel()}</label>
+              <input
+                className="form-control"
+                name="frontendPath"
+                value={form.frontendPath}
+                onChange={handleChange}
+                placeholder="e.g., C:\\path\\to\\your\\project"
+              />
             </div>
           )}
           {isBackend && (
             <div className="mb-3 fw-bold">
-              <label>Backend Path</label>
-              <input className="form-control" name="backendPath" value={form.backendPath} onChange={handleChange} />
+              <label>{getBackendPathLabel()}</label>
+              <input
+                className="form-control"
+                name="backendPath"
+                value={form.backendPath}
+                onChange={handleChange}
+                placeholder="e.g., C:\\path\\to\\your\\project"
+              />
             </div>
           )}
+
+          {/* Spring Boot Fields */}
           {isSpringBoot && (
             <>
               <div className="mb-3">
-                <label>Java Path</label>
-                <input className="form-control" name="javaPath" value={form.javaPath} onChange={handleChange} placeholder="optional will use the ja version in system path"/>
+                <label className="fw-bold">Java Path (optional)</label>
+                <input
+                  className="form-control"
+                  name="javaPath"
+                  value={form.javaPath}
+                  onChange={handleChange}
+                  placeholder="e.g., C:\\Program Files\\Java\\jdk-11.0.10 (If not provided, system default Java path will be used)"
+                />
               </div>
               <div className="mb-3">
-                <label>Spring Profile</label>
-                <input className="form-control" name="springProfile" value={form.springProfile} onChange={handleChange} placeholder="local, dev, prod"/>
+                <label className="fw-bold">Spring Profile (optional)</label>
+                <input
+                  className="form-control"
+                  name="springProfile"
+                  value={form.springProfile}
+                  onChange={handleChange}
+                  placeholder="e.g., local, dev, prod (If not provided, default profile will be used)"
+                />
               </div>
             </>
           )}
@@ -195,14 +267,14 @@ function App() {
               name="port"
               value={form.port}
               onChange={handleChange}
-              placeholder="e.g., 8080 or 3000"
+              placeholder="e.g., 8080 or 3000 (If not provided, default port will be used)"
             />
           </div>
 
           {/* Submit */}
           <div className="text-center mt-4">
             <button className="btn btn-primary px-5" onClick={handleSubmit}>
-              Generate & Download ZIP
+              Generate & Download
             </button>
           </div>
         </div>
