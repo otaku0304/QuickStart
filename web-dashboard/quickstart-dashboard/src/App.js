@@ -8,6 +8,7 @@ function App() {
     applicationType: "frontend",
     projectType: "React",
     powershellVersion: "7",
+    os: "windows",
     frontendPath: "",
     backendPath: "",
     javaPath: "",
@@ -100,11 +101,9 @@ function App() {
     }
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/generate",
-        form,
-        { responseType: "blob" }
-      );
+      const res = await axios.post("http://localhost:5000/generate", form, {
+        responseType: "blob",
+      });
 
       const blob = new Blob([res.data], { type: "application/zip" });
       const url = window.URL.createObjectURL(blob);
@@ -144,6 +143,55 @@ function App() {
         </div>
 
         <div className="card shadow-lg p-4">
+          <div className="mb-4">
+            <label className="form-label fw-bold">Operating System</label>
+            <div className="d-flex gap-4 flex-wrap">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="os"
+                  id="windows"
+                  value="windows"
+                  checked={form.os === "windows"}
+                  onChange={handleChange}
+                />
+                <label className="form-check-label" htmlFor="windows">
+                  Windows
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="os"
+                  id="linux"
+                  value="linux"
+                  disabled
+                />
+                <label className="form-check-label text-muted" htmlFor="linux">
+                  Linux (coming soon)
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="os"
+                  id="mac"
+                  value="mac"
+                  disabled
+                />
+                <label className="form-check-label text-muted" htmlFor="mac">
+                  Mac (coming soon)
+                </label>
+              </div>
+            </div>
+            <small className="text-muted">
+              Currently, only Windows is supported.
+            </small>
+          </div>
+
           {/* Application Type + PowerShell */}
           <div className="row mb-4">
             <div className="col-md-6">
