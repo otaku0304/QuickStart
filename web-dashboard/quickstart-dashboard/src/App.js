@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "./App.css";
 import logo from "./assets/rocket.png";
+import githubIcon from "./assets/github.png"; // ← Add this SVG to assets folder
 
 function App() {
   const [form, setForm] = useState({
@@ -120,223 +121,271 @@ function App() {
   };
 
   return (
-    <div className={`min-vh-100 ${darkMode ? "dark-mode" : "light-mode"}`}>
-      <div className="container py-4">
-        {/* Header */}
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <div className="fs-3 fw-bold">
-            <img
-              src={logo}
-              alt="Logo"
-              style={{ height: "32px", marginRight: "8px" }}
-            />
-            <span className="text-primary">
-              QuickStart Launch Script Generator
-            </span>
+    <div
+      className={`min-vh-100 d-flex flex-column ${
+        darkMode ? "dark-mode" : "light-mode"
+      }`}
+    >
+      {/* ===== HEADER ===== */}
+      <header className="py-3 border-bottom shadow-sm bg-white sticky-top">
+        <div className="container d-flex justify-content-between align-items-center">
+          <div className="d-flex align-items-center gap-2">
+            <img src={logo} alt="Logo" height="32" />
+            <h5 className="m-0 fw-bold">StartMyDev</h5>
           </div>
-          <button
-            className={`btn btn-sm ${darkMode ? "btn-light" : "btn-dark"}`}
-            onClick={toggleTheme}
-          >
-            {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
-          </button>
-        </div>
-
-        <div className="card shadow-lg p-4">
-          <div className="mb-4">
-            <label className="form-label fw-bold">Operating System</label>
-            <div className="d-flex gap-4 flex-wrap">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="os"
-                  id="windows"
-                  value="windows"
-                  checked={form.os === "windows"}
-                  onChange={handleChange}
-                />
-                <label className="form-check-label" htmlFor="windows">
-                  Windows
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="os"
-                  id="linux"
-                  value="linux"
-                  disabled
-                />
-                <label className="form-check-label text-muted" htmlFor="linux">
-                  Linux (coming soon)
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="os"
-                  id="mac"
-                  value="mac"
-                  disabled
-                />
-                <label className="form-check-label text-muted" htmlFor="mac">
-                  Mac (coming soon)
-                </label>
-              </div>
-            </div>
-            <small className="text-muted">
-              Currently, only Windows is supported.
-            </small>
-          </div>
-
-          {/* Application Type + PowerShell */}
-          <div className="row mb-4">
-            <div className="col-md-6">
-              <label className="form-label fw-bold">Application Type</label>
-              <div className="d-flex gap-3 flex-wrap">
-                {["frontend", "backend", "fullstack"].map((type) => (
-                  <div key={type} className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="applicationType"
-                      id={type}
-                      value={type}
-                      checked={form.applicationType === type}
-                      onChange={handleChange}
-                    />
-                    <label className="form-check-label" htmlFor={type}>
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="col-md-6">
-              <label className="form-label fw-bold">PowerShell Version</label>
-              <div className="d-flex gap-3">
-                {["5", "7"].map((ver) => (
-                  <div key={ver} className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="powershellVersion"
-                      id={`ps${ver}`}
-                      value={ver}
-                      checked={form.powershellVersion === ver}
-                      onChange={handleChange}
-                    />
-                    <label className="form-check-label" htmlFor={`ps${ver}`}>
-                      PowerShell {ver}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Project Type + Port */}
-          <div className="row mb-4">
-            <div className="col-md-6">
-              <label className="form-label fw-bold">Project Type</label>
-              <div className="d-flex flex-wrap gap-3">
-                {getProjectTypeOptions().map((type) => (
-                  <div key={type} className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="projectType"
-                      id={type}
-                      value={type}
-                      checked={form.projectType === type}
-                      onChange={handleChange}
-                      disabled={isFullstack}
-                    />
-                    <label className="form-check-label" htmlFor={type}>
-                      {type}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="col-md-6">
-              <label className="fw-bold">Port (optional)</label>
-              <input
-                className="form-control"
-                name="port"
-                value={form.port}
-                onChange={handleChange}
-                placeholder="e.g., 8080 or 3000 (default will be used if empty)"
-              />
-            </div>
-          </div>
-
-          {/* Frontend + Backend Paths */}
-          <div className="row mb-4">
-            {isFrontend && (
-              <div className="col-md-6 mb-3">
-                <label className="fw-bold">{getFrontendPathLabel()}</label>
-                <input
-                  className="form-control"
-                  name="frontendPath"
-                  value={form.frontendPath}
-                  onChange={handleChange}
-                  placeholder="e.g., C:\\path\\to\\frontend"
-                />
-              </div>
-            )}
-            {isBackend && (
-              <div className="col-md-6 mb-3">
-                <label className="fw-bold">{getBackendPathLabel()}</label>
-                <input
-                  className="form-control"
-                  name="backendPath"
-                  value={form.backendPath}
-                  onChange={handleChange}
-                  placeholder="e.g., C:\\path\\to\\backend"
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Spring Boot Extras */}
-          {isSpringBoot && (
-            <div className="row mb-4">
-              <div className="col-md-6 mb-3">
-                <label className="fw-bold">Java Path (optional)</label>
-                <input
-                  className="form-control"
-                  name="javaPath"
-                  value={form.javaPath}
-                  onChange={handleChange}
-                  placeholder="Will use system default if not provided"
-                />
-              </div>
-              <div className="col-md-6 mb-3">
-                <label className="fw-bold">Spring Profile (optional)</label>
-                <input
-                  className="form-control"
-                  name="springProfile"
-                  value={form.springProfile}
-                  onChange={handleChange}
-                  placeholder="e.g., local, dev, prod (default will be used if empty)"
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Submit Button */}
-          <div className="text-center mt-4">
-            <button className="btn btn-primary px-5" onClick={handleSubmit}>
-              Generate & Download
+          <div className="d-flex align-items-center gap-3">
+            <a
+              href="https://github.com/otaku0304/StartMyDev"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="View on GitHub"
+            >
+              <img src={githubIcon} alt="GitHub" height="24" />
+            </a>
+            <a
+              href="https://your-docs-link.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-decoration-none fw-semibold"
+            >
+              Docs
+            </a>
+            <button
+              className={`btn btn-sm ${darkMode ? "btn-light" : "btn-dark"}`}
+              onClick={toggleTheme}
+            >
+              {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
             </button>
           </div>
         </div>
-      </div>
+      </header>
+
+      {/* ===== MAIN CONTENT ===== */}
+      <main className="flex-grow-1">
+        <div className="container py-4">
+          {/* form card here — keep your existing form UI */}
+          <div className="card shadow-lg p-4">
+            <div className="mb-4">
+              <label className="form-label fw-bold">Operating System</label>
+              <div className="d-flex gap-4 flex-wrap">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="os"
+                    id="windows"
+                    value="windows"
+                    checked={form.os === "windows"}
+                    onChange={handleChange}
+                  />
+                  <label className="form-check-label" htmlFor="windows">
+                    Windows
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="os"
+                    id="linux"
+                    value="linux"
+                    disabled
+                  />
+                  <label
+                    className="form-check-label text-muted"
+                    htmlFor="linux"
+                  >
+                    Linux (coming soon)
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="os"
+                    id="mac"
+                    value="mac"
+                    disabled
+                  />
+                  <label className="form-check-label text-muted" htmlFor="mac">
+                    Mac (coming soon)
+                  </label>
+                </div>
+              </div>
+              <small className="text-muted">
+                Currently, only Windows is supported.
+              </small>
+            </div>
+
+            {/* Application Type + PowerShell */}
+            <div className="row mb-4">
+              <div className="col-md-6">
+                <label className="form-label fw-bold">Application Type</label>
+                <div className="d-flex gap-3 flex-wrap">
+                  {["frontend", "backend", "fullstack"].map((type) => (
+                    <div key={type} className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="applicationType"
+                        id={type}
+                        value={type}
+                        checked={form.applicationType === type}
+                        onChange={handleChange}
+                      />
+                      <label className="form-check-label" htmlFor={type}>
+                        {type.charAt(0).toUpperCase() + type.slice(1)}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <label className="form-label fw-bold">PowerShell Version</label>
+                <div className="d-flex gap-3">
+                  {["5", "7"].map((ver) => (
+                    <div key={ver} className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="powershellVersion"
+                        id={`ps${ver}`}
+                        value={ver}
+                        checked={form.powershellVersion === ver}
+                        onChange={handleChange}
+                      />
+                      <label className="form-check-label" htmlFor={`ps${ver}`}>
+                        PowerShell {ver}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Project Type + Port */}
+            <div className="row mb-4">
+              <div className="col-md-6">
+                <label className="form-label fw-bold">Project Type</label>
+                <div className="d-flex flex-wrap gap-3">
+                  {getProjectTypeOptions().map((type) => (
+                    <div key={type} className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="projectType"
+                        id={type}
+                        value={type}
+                        checked={form.projectType === type}
+                        onChange={handleChange}
+                        disabled={isFullstack}
+                      />
+                      <label className="form-check-label" htmlFor={type}>
+                        {type}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="col-md-6">
+                <label className="fw-bold">Port (optional)</label>
+                <input
+                  className="form-control"
+                  name="port"
+                  value={form.port}
+                  onChange={handleChange}
+                  placeholder="e.g., 8080 or 3000 (default will be used if empty)"
+                />
+              </div>
+            </div>
+
+            {/* Frontend + Backend Paths */}
+            <div className="row mb-4">
+              {isFrontend && (
+                <div className="col-md-6 mb-3">
+                  <label className="fw-bold">{getFrontendPathLabel()}</label>
+                  <input
+                    className="form-control"
+                    name="frontendPath"
+                    value={form.frontendPath}
+                    onChange={handleChange}
+                    placeholder="e.g., C:\\path\\to\\frontend"
+                  />
+                </div>
+              )}
+              {isBackend && (
+                <div className="col-md-6 mb-3">
+                  <label className="fw-bold">{getBackendPathLabel()}</label>
+                  <input
+                    className="form-control"
+                    name="backendPath"
+                    value={form.backendPath}
+                    onChange={handleChange}
+                    placeholder="e.g., C:\\path\\to\\backend"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Spring Boot Extras */}
+            {isSpringBoot && (
+              <div className="row mb-4">
+                <div className="col-md-6 mb-3">
+                  <label className="fw-bold">Java Path (optional)</label>
+                  <input
+                    className="form-control"
+                    name="javaPath"
+                    value={form.javaPath}
+                    onChange={handleChange}
+                    placeholder="Will use system default if not provided"
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label className="fw-bold">Spring Profile (optional)</label>
+                  <input
+                    className="form-control"
+                    name="springProfile"
+                    value={form.springProfile}
+                    onChange={handleChange}
+                    placeholder="e.g., local, dev, prod (default will be used if empty)"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Submit Button */}
+            <div className="text-center mt-4">
+              <button className="btn btn-primary px-5" onClick={handleSubmit}>
+                Generate & Download
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* ===== FOOTER ===== */}
+      <footer className="py-3 border-top bg-light">
+        <div className="container d-flex flex-column flex-md-row justify-content-between align-items-center text-muted">
+          <div>
+            <small>
+              &copy; {new Date().getFullYear()} StartMyDev Generator. All rights
+              reserved.
+            </small>
+          </div>
+          <div>
+            <small>
+              Made with ❤️ by{" "}
+              <a
+                href="https://github.com/otaku0304"
+                className="text-decoration-none"
+              >
+                mr_ask_chay
+              </a>
+            </small>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

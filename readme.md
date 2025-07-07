@@ -1,6 +1,6 @@
-# QuickStart
+# StartMyDev
 
-**QuickStart** is a PowerShell-based automation setup to streamline running applications like frontend, backend, or full-stack across multiple environments — including local, dev, stage, and production.
+**StartMyDev** is a PowerShell-based automation setup to streamline running applications like frontend, backend, or full-stack across multiple environments — including local, dev, stage, and production.
 
 ## 🚀 Features
 
@@ -14,7 +14,7 @@
 
 - `windows-ps7/NgBootStart`: Stable and functional. Tested with Angular apps and working as expected.
 - `windows-ps5/NgBootStart`: Stable and functional. Tested with Angular apps and working as expected.
-- `windows-ps5/FlaskQuickStart`: Stable and functional. Tested with Flask app and working as expected.
+- `windows-ps5/FlaskStartMyDev`: Stable and functional. Tested with Flask app and working as expected.
 
 ## ⚠️ Editor Launch Issues
 
@@ -29,7 +29,7 @@ These issues are actively being addressed and workarounds are being tested in th
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/otaku0304/QuickStart.git
+   git clone https://github.com/otaku0304/StartMyDev.git
 2. Navigate to the appropriate folder (e.g., windows-ps7/NgBootStart).
 3. Customize the setup by editing the Retailers.ps1 file according to your environment and project needs (e.g., choose whether to run frontend, backend, or full-stack; set environment type like local, dev, stage, or prod).
 

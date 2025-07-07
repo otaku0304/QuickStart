@@ -1,12 +1,12 @@
-# NgBootQuickStart (Windows Edition)
+# NgBootStartMyDev (Windows Edition)
 
-NgBootQuickStart is a lightweight, script-driven solution to instantly launch your full-stack Spring Boot and Angular (or React) projects **without opening an IDE or editor** like IntelliJ or VS Code.
+NgBootStartMyDev is a lightweight, script-driven solution to instantly launch your full-stack Spring Boot and Angular (or React) projects **without opening an IDE or editor** like IntelliJ or VS Code.
 
 This Windows edition provides a simple PowerShell-based startup experience optimized for **Java**, **Maven**, **Angular**, and **React** environments.
 
 ---
 
-> **Note**: The backend and frontend projects are **not stored** inside this repository. You configure their **local paths** in the `NgBootQuickStart.ps1`
+> **Note**: The backend and frontend projects are **not stored** inside this repository. You configure their **local paths** in the `NgBootStartMyDev.ps1`
 
 ---
 
@@ -34,7 +34,7 @@ This Windows edition provides a simple PowerShell-based startup experience optim
 
 ## 🛠️ Configuration
 
-Before running, open `ngBootNgBootQuickStart.ps1` and set the following variables:
+Before running, open `ngBootNgBootStartMyDev.ps1` and set the following variables:
 
 ```powershell
 $javaPath      = "C:\Path\To\Your\Java" 

@@ -1,6 +1,6 @@
-# QuickStart (Windows Edition)
+# StartMyDev (Windows Edition)
 
-QuickStart is a lightweight, script-driven solution to instantly launch your full-stack Spring Boot and Angular (or React) projects **without opening an IDE or editor** like IntelliJ or VS Code.
+StartMyDev is a lightweight, script-driven solution to instantly launch your full-stack Spring Boot and Angular (or React) projects **without opening an IDE or editor** like IntelliJ or VS Code.
 
 This Windows edition provides a simple PowerShell-based startup experience optimized for **Java**, **Maven**, **Angular**, and **React** environments.
 
