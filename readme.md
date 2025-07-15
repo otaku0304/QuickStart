@@ -34,3 +34,10 @@ These issues are actively being addressed and workarounds are being tested in th
 3. Customize the setup by editing the Retailers.ps1 file according to your environment and project needs (e.g., choose whether to run frontend, backend, or full-stack; set environment type like local, dev, stage, or prod).
 
 4. Run the launch.bat by double clicking 
+
+
+## Note
+
+This project is licensed under the Apache License 2.0.
+
+"StartMyDev" is a trademark of Sai Annam (mr_ask_chay). Use of the name or logo without permission is not allowed.
