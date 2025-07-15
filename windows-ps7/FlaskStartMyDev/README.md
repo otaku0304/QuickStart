@@ -1,12 +1,12 @@
-# FlaskQuickStart (Windows Edition)
+# FlaskStartMyDev (Windows Edition)
 
-**FlaskQuickStart** is a lightweight, script-driven solution to instantly launch your **Flask flask projects without opening an IDE or editor** like PyCharm or VS Code.
+**FlaskStartMyDev** is a lightweight, script-driven solution to instantly launch your **Flask flask projects without opening an IDE or editor** like PyCharm or VS Code.
 
 This Windows edition provides a simple PowerShell-based startup experience optimized for **Python**, **Flask**.
 
 ---
 
-> **Note**: The flask projects is **not stored** inside this repository. You configure their **local paths** in the `FlaskQuickStart.ps1`.
+> **Note**: The flask projects is **not stored** inside this repository. You configure their **local paths** in the `FlaskStartMyDev.ps1`.
 
 ---
 
@@ -30,7 +30,7 @@ This Windows edition provides a simple PowerShell-based startup experience optim
 
 ## 🛠️ Configuration
 
-Before running, open `flaskQuickStart.ps1` and set the following variables:
+Before running, open `flaskStartMyDev.ps1` and set the following variables:
 
 ```powershell
 $pythonPath  = "C:\Path\To\Your\Python"
