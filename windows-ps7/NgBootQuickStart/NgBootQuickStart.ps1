@@ -1,7 +1,7 @@
-# QuickStart Brand Display
+# StartMyDev Brand Display
 
 Clear-Host
-$brandName = "QuickStart"
+$brandName = "StartMyDev"
 
 Write-Host "======================================" -ForegroundColor Cyan
 Write-Host "         WELCOME TO $brandName         " -ForegroundColor Yellow
@@ -9,7 +9,7 @@ Write-Host "======================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Empowering your journey with speed and innovation!" -ForegroundColor Green
 Write-Host ""
-Write-Host "Visit us at: https://github.com/otaku0304/QuickStart" -ForegroundColor Magenta
+Write-Host "Visit us at: https://github.com/otaku0304/StartMyDev" -ForegroundColor Magenta
 Write-Host ""
 Write-Host "--------------------------------------" -ForegroundColor DarkCyan
 

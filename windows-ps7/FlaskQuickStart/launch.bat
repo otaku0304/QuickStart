@@ -1,2 +1,2 @@
 @echo off
-powershell -ExecutionPolicy Bypass -File ".\FlaskQuickStart.ps1`"
+powershell -ExecutionPolicy Bypass -File ".\FlaskStartMyDev.ps1`"
