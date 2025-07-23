@@ -10,11 +10,59 @@
 - Lightweight, no external dependencies.
 - Structured folder setup for PowerShell 7 (`windows-ps7`) and PowerShell 5 (`windows-ps5`).
 
-## 📁 Current Structure
+## 📁 Project Structure Overview
 
-- `windows-ps7/NgBootStart`: Stable and functional. Tested with Angular apps and working as expected.
-- `windows-ps5/NgBootStart`: Stable and functional. Tested with Angular apps and working as expected.
-- `windows-ps5/FlaskStartMyDev`: Stable and functional. Tested with Flask app and working as expected.
+The following are the supported folder structures for Windows-based development environments:
+
+### 🪟 Windows – PowerShell 5 (`windows-ps5/`)
+- [`BootStartMyDev`](./windows-ps5/BootStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
+
+- [`FlaskStartMyDev`](./windows-ps5/FlaskStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
+
+- [`NgBootStartMyDev`](./windows-ps5/NgBootStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
+
+- [`NgStartMyDev`](./windows-ps5/NgStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
+
+- [`ReactBootStartMyDev`](./windows-ps5/ReactBootStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
+
+- [`ReactStartMyDev`](./windows-ps5/ReactStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
+
+### 🪟 Windows – PowerShell 7 (`windows-ps7/`)
+- [`BootStartMyDev`](./windows-ps7/BootStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
+
+- [`FlaskStartMyDev`](./windows-ps7/FlaskStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
+
+- [`NgBootStartMyDev`](./windows-ps7/NgBootStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
+
+- [`NgStartMyDev`](./windows-ps7/NgStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
+
+- [`ReactBootStartMyDev`](./windows-ps7/ReactBootStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
+
+- [`ReactStartMyDev`](./windows-ps7/ReactStartMyDev/):  
+  ✅ Stable and functional.  
+  🧪 Tested with Angular apps and working as expected.
 
 ## ⚠️ Editor Launch Issues
 
