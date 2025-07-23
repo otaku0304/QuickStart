@@ -14,11 +14,13 @@ Write-Host ""
 Write-Host "--------------------------------------" -ForegroundColor DarkCyan
 
 # === CONFIG ===
-$backendPath = "C:\Path\To\Your\SpringBootProject" # change to your path "C:\Path\To\Your\SpringBootProject"
-$frontendPath = "C:\Path\To\Your\AngularOrReactProject" # change to your frontend path
-$backendPort = 8080 # change to your backend port
-$javaPath = "C:\Path\To\Your\Java" # change to your Java path
-$springProfile = "dev" # Example: "dev", "prod", or "" for none
+$backendPath = "{{BACKEND_PATH}}"
+$frontendPath = "{{FRONTEND_PATH}}"
+$backendPort = "{{BACKEND_PORT}}"
+$frontendPort = "{{FRONTEND_PORT}}"
+$javaPath = "{{JAVA_PATH}}"
+$springProfile = "{{SPRING_PROFILE}}"
+$gitBranch = "{{GIT_BRANCH}}"
 
 # === FUNCTION TO WAIT FOR PORT WITHOUT PROGRESS LOADER ===
 function Wait-ForPort {
@@ -48,13 +50,13 @@ function Wait-ForPort {
 $env:JAVA_HOME = $javaPath
 $env:Path = "$javaPath\bin;$env:Path"
 
-# === CHECKOUT BACKEND CODE ===
+# === GIT BRANCH CHECKOUT AND PULL THE LATEST CHANGES ===
 Write-Host "`nPreparing Backend..." -ForegroundColor DarkGreen
 Set-Location $backendPath
-Write-Host "Checking out 'development' branch..." -ForegroundColor DarkGreen
-git checkout development
-Write-Host "Pulling latest changes from origin/development..." -ForegroundColor DarkGreen
-git pull origin development
+Write-Host "Checking out '$gitBranch' branch..." -ForegroundColor DarkGreen
+git checkout $gitBranch
+Write-Host "Pulling latest changes from origin/$gitBranch..." -ForegroundColor DarkGreen
+git pull origin $gitBranch
 
 # === PREPARE MAVEN COMMAND ARGUMENTS ===
 if ([string]::IsNullOrEmpty($springProfile)) {
@@ -63,22 +65,33 @@ if ([string]::IsNullOrEmpty($springProfile)) {
     $mvnArgs = "spring-boot:run --define spring-boot.run.arguments='--spring.profiles.active=$springProfile'"
 }
 
-# === START BACKEND IN NEW POWERSHELL 7 WINDOW ===
-Write-Host "`Launching Backend in a new PowerShell 7 window..." -ForegroundColor Yellow
-Start-Process pwsh -ArgumentList "-NoExit", "-Command", "cd '$backendPath'; mvn $mvnArgs"
+# === START BACKEND IN NEW POWERSHELL 5 WINDOW ===
+Write-Host "`Launching Backend in a new PowerShell 5 window..." -ForegroundColor Yellow
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$backendPath'; mvn spring-boot:run --define spring-boot.run.arguments='--spring.profiles.active=dev'"
 
-# === WAIT FOR BACKEND TO BE READY ===
-Write-Host "`Waiting for Backend to start on port $backendPort..."
+# === WAIT FOR BACKEND TO BE READY ====
 if (Wait-ForPort -Port $backendPort -TimeoutSeconds 60) {
-    Write-Host "`Backend is up and running!"  -ForegroundColor Cyan
-    Write-Host "`Preparing Frontend"  -ForegroundColor Cyan
+    Write-Host "`nBackend is up and running!" -ForegroundColor Cyan
+    Write-Host "Preparing Frontend..." -ForegroundColor Cyan
+
     Set-Location $frontendPath
     git checkout development
     git pull origin development
-    Write-Host "`Launching Frontend in a new tab..."  -ForegroundColor Cyan
-    wt -w 0 nt -d "$frontendPath" pwsh -NoExit -Command "npm install && npm start"
+
+    Write-Host "`nLaunching Frontend npm install in a new tab..." -ForegroundColor Cyan
+    Start-Process wt -ArgumentList @(
+     '-w', '0', 'nt', '-d', $frontendPath,
+     'powershell', '-NoExit', '-Command', 'npm install'
+    )
+
+    Write-Host "`nLaunching Frontend npm start in a new tab..." -ForegroundColor Cyan
+    Start-Process wt -ArgumentList @(
+     '-w', '0', 'nt', '-d', $frontendPath,
+     'powershell', '-NoExit', '-Command', 'npm start'
+    )
+
 } else {
-    Write-Host "`Backend did not start on port $backendPort within 60 seconds."
+    Write-Host "`nBackend did not start on port $backendPort within 60 seconds." -ForegroundColor Red
     Read-Host "Press ENTER to close"
     exit 1
 }
