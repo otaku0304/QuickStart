@@ -17,15 +17,15 @@ The following are the supported folder structures for Windows-based development 
 ### 🪟 Windows – PowerShell 5 (`windows-ps5/`)
 - [`BootStartMyDev`](./windows-ps5/BootStartMyDev/):  
   ✅ Stable and functional.  
-  🧪 Tested with Angular apps and working as expected.
+  🧪 Tested with Spring Boot apps and working as expected.
 
 - [`FlaskStartMyDev`](./windows-ps5/FlaskStartMyDev/):  
   ✅ Stable and functional.  
-  🧪 Tested with Angular apps and working as expected.
+  🧪 Tested with Flask apps and working as expected.
 
 - [`NgBootStartMyDev`](./windows-ps5/NgBootStartMyDev/):  
   ✅ Stable and functional.  
-  🧪 Tested with Angular apps and working as expected.
+  🧪 Tested with  apps and working as expected.
 
 - [`NgStartMyDev`](./windows-ps5/NgStartMyDev/):  
   ✅ Stable and functional.  
@@ -42,15 +42,15 @@ The following are the supported folder structures for Windows-based development 
 ### 🪟 Windows – PowerShell 7 (`windows-ps7/`)
 - [`BootStartMyDev`](./windows-ps7/BootStartMyDev/):  
   ✅ Stable and functional.  
-  🧪 Tested with Angular apps and working as expected.
+  🧪 Tested with Spring Boot apps and working as expected.
 
 - [`FlaskStartMyDev`](./windows-ps7/FlaskStartMyDev/):  
   ✅ Stable and functional.  
-  🧪 Tested with Angular apps and working as expected.
+  🧪 Tested with Flask apps and working as expected.
 
 - [`NgBootStartMyDev`](./windows-ps7/NgBootStartMyDev/):  
   ✅ Stable and functional.  
-  🧪 Tested with Angular apps and working as expected.
+  🧪 Tested with React and SpringBoot FullStack apps and working as expected.
 
 - [`NgStartMyDev`](./windows-ps7/NgStartMyDev/):  
   ✅ Stable and functional.  
@@ -58,11 +58,11 @@ The following are the supported folder structures for Windows-based development 
 
 - [`ReactBootStartMyDev`](./windows-ps7/ReactBootStartMyDev/):  
   ✅ Stable and functional.  
-  🧪 Tested with Angular apps and working as expected.
+  🧪 Tested with React apps and working as expected.
 
 - [`ReactStartMyDev`](./windows-ps7/ReactStartMyDev/):  
   ✅ Stable and functional.  
-  🧪 Tested with Angular apps and working as expected.
+  🧪 Tested with React and SprinBoot FullStack apps and working as expected.
 
 ## ⚠️ Editor Launch Issues
 
